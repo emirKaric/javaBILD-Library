@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 public class Library {
 	
@@ -34,88 +32,59 @@ public class Library {
 			return null;
 		}
 		
+		
 		public Library() {
 			accounts = new ArrayList<Account>();
 			books = new ArrayList<Book>();
 			borrowedBooks = new ArrayList<BorrowedBook>();
 		}
 	
-		public String posudiKnjigu(int accountIndex, int bookIndex, Date date) {
-			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex );
+		public void BorrowABook(int accountIndex, int bookIndex) {
+			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex);
 			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
 
-			if (provjeraKnjiga(knjiga)) {
-				return "Nije moguce dodati knjigu sa ovim indexom";
+			if (book.getBookStatus()) {
+				return;
 			}
 
-			if (provjeraKorisnika(korisnik)) {
-				return "Nije moguce dodati korisnika sa ovim indexom";
+			if (account.getNumberOfBorrowedBooks() >= 3) {
+				return;
 			}
 
-			knjiga.setStatusKnjige(true);
-			korisnik.uvecajBrojKnjiga();
-
-			for (int i = 0; i < podignuteKnjige.length; i++) {
-				if (podignuteKnjige[i] == null) {
-					podignuteKnjige[i] = new PodignutaKnjiga(indexKorisnika, indexKnjige, datum);
-					return "Knjiga posudjena";
-				}
-			}
-
-			int temp = podignuteKnjige.length;
-			podignuteKnjige = Alociraj(podignuteKnjige);
-			podignuteKnjige[temp] = new PodignutaKnjiga(indexKorisnika, indexKnjige, datum);
-			return "Knjiga posudjena";
+			book.setBookStatus(true);
+			account.increaseTheCounter();
+			
+			borrowedBooks.add(new BorrowedBook(accountIndex,bookIndex));
+			
+			return;
 		}
 
-		public String vratiKnjigu(int indexKnjige) {
-			for (int i = 0; i < podignuteKnjige.length; i++) {
-				if (podignuteKnjige[i] != null) {
-					if (podignuteKnjige[i].getIndexKnjige() == indexKnjige) {
-						((Racun) vratiReferencu(podignuteKnjige[i].getIndexKorisnika(), korisnickiRacuni))
-								.smanjiBrojKnjiga();
-						((Knjiga) vratiReferencu(indexKnjige, knjigeUBiblioteci)).setStatusKnjige(false);
-						podignuteKnjige[i] = null;
-						return "Knjiga vracena ";
-					}
+		public void vratiKnjigu(int bookIndex) {
+			for (int i = 0; i < borrowedBooks.size(); i++) {
+					if (borrowedBooks.get(i).getBookIndex() == bookIndex) {
+						((Account) getReference(accounts, 0, accounts.size(), borrowedBooks.get(i).getAccountIndex())).decreaseTheCounter();
+						((Book) getReference(books, 0, books.size(), bookIndex)).setBookStatus(false);
+						borrowedBooks.remove(i);
+						return;
 				}
 			}
-			return "Greska u vracanju knjige";
+			return;
 		}
 
-		public void dodajKorisnika(String ime, String prezime) {
-			for (int i = 0; i < korisnickiRacuni.length; i++) {
-				if (korisnickiRacuni[i] == null) {
-					korisnickiRacuni[i] = new Racun(ime, prezime);
-					return;
-				}
-			}
-			int temp = korisnickiRacuni.length;
-			korisnickiRacuni = Alociraj(korisnickiRacuni);
-			korisnickiRacuni[temp] = new Racun(ime, prezime);
+		public void dodajKorisnika(String firstName, String lastName) {
+			accounts.add(new Account(firstName, lastName));
 		}
 
-		public void dodajKnjigu(String naziv) {
-			for (int i = 0; i < knjigeUBiblioteci.length; i++) {
-				if (knjigeUBiblioteci[i] == null) {
-					knjigeUBiblioteci[i] = new Knjiga(naziv);
-					return;
-				}
-			}
-
-			int temp = knjigeUBiblioteci.length;
-			knjigeUBiblioteci = Alociraj(knjigeUBiblioteci);
-			knjigeUBiblioteci[temp] = new Knjiga(naziv);
+		public void dodajKnjigu(String name) {
+			books.add(new Book(name));
 		}
 		
 		public String toStringAll() {
 			StringBuffer string = new StringBuffer();
-			string.append("Ukupan broj korisnika koji su zatrazili usluge biblioteke: " + Racun.getLength());
-			string.append("\nUkupan broj knjiga koje su dodane u biblioteku: " + Knjiga.getLength());
-			for (int i = 0; i < knjigeUBiblioteci.length; i++) {
-				if (knjigeUBiblioteci[i] != null)
-					string.append(knjigeUBiblioteci[i]);
+			string.append("");
+			for (int i = 0; i < accounts.size(); i++) {
+				string.append(accounts.get(i).toString());
 			}
-			
+			return string.toString();
 		}
 }

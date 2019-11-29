@@ -34,27 +34,27 @@ public class Account implements Index {
 		return getFirstName();
 	}
 
-	public void setIme(String firstName) {
+	public void setFirsName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getPrezime() {
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setPrezime(String lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public void uvecajBrojKnjiga() {
+	public void increaseTheCounter() {
 		++numberOfBorrowedBooks;
 	}
 
-	public void smanjiBrojKnjiga() {
+	public void decreaseTheCounter() {
 		--numberOfBorrowedBooks;
 	}
 
-	public int getBrojPosudjenihKnjiga() {
+	public int getNumberOfBorrowedBooks() {
 		return numberOfBorrowedBooks;
 	}
 

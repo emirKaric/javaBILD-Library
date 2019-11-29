@@ -1,35 +1,33 @@
 import java.util.Date;
 
 public class BorrowedBook {
-	private final int indexKorisnika;
-	private final int indexKnjige;
-	private Date datumDizanja;
+	private final int accountIndex;
+	private final int bookIndex;
+	private Date dateOfBorrowing;
 	
-	public PodignutaKnjiga(){
-		indexKorisnika = 1;
-		indexKnjige = 1;
-		datumDizanja = new Date();
+	
+	public BorrowedBook(int accountIndex, int bookIndex){
+		this.accountIndex = accountIndex; 
+		this.bookIndex = bookIndex;
+		this.dateOfBorrowing = new Date();
+	}
+	public BorrowedBook() {
+		this(0,0);
 	}
 	
-	public PodignutaKnjiga(int indexKorisnika, int indexKnjige, Date datumDizanja){
-		this.indexKorisnika = indexKorisnika; 
-		this.indexKnjige = indexKnjige;
-		this.datumDizanja = datumDizanja;
-	}
-	
-	public int getIndexKnjige() {
-		return indexKnjige;
+	public int getAccountIndex() {
+		return accountIndex;
 	}	
 	
-	public int getIndexKorisnika() {
-		return indexKorisnika;
+	public int getBookIndex() {
+		return bookIndex;
 	}
 	
-	public Date getDatumDizanja() {
-		return datumDizanja;
+	public Date getDateOfBorrowing() {
+		return dateOfBorrowing;
 	}
 	public String toString() {
-		return "\n\n======================\n\n" + "\nIndex korisnika: " + indexKorisnika + "\nIndex knjige: " + indexKnjige
+		return "\n\n======================\n\n" + "\nAccount index: " + accountIndex + "\nBook index: " + bookIndex
 				+ "\n\n=====================\n";
 	}
 }
