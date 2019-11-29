@@ -1,26 +1,24 @@
-public class Account {
+public class Account implements Index {
 	private static int _index; // Varijabla koja prati koliko ima racuna
 	private final int index;
-	private String ime;
-	private String prezime;
-	private int brojPosudjenihKnjiga;
+	private String firstName;
+	private String lastName;
+	private int numberOfBorrowedBooks;
 
 	static {
 		_index = 1;
 	}
 
-	public Racun() {
+
+	public Account(String firstName, String lastName) {
 		index = _index++;
-		ime = "Nepoznato";
-		prezime = "Nepoznato";
-		brojPosudjenihKnjiga = 0;
+		this.firstName = firstName;
+		this.firstName = lastName;
+		numberOfBorrowedBooks = 0;
 	}
 
-	public Racun(String ime, String prezime) {
-		index = _index++;
-		this.ime = ime;
-		this.prezime = prezime;
-		brojPosudjenihKnjiga = 0;
+	public Account() {
+		this(null,null);
 	}
 
 	public static int getLength() {
@@ -32,42 +30,36 @@ public class Account {
 		return index;
 	}
 
-	public String getIme() {
-		return ime;
+	public String getFirstName() {
+		return getFirstName();
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setIme(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getPrezime() {
-		return prezime;
+		return lastName;
 	}
 
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setPrezime(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public boolean uvecajBrojKnjiga() {
-		if (brojPosudjenihKnjiga + 1 <= 3) {
-			++brojPosudjenihKnjiga;
-			return true;
-		}
-		return false;
+	public void uvecajBrojKnjiga() {
+		++numberOfBorrowedBooks;
 	}
 
 	public void smanjiBrojKnjiga() {
-		if (brojPosudjenihKnjiga - 1 < 0) {
-			return;
-		}
-		--brojPosudjenihKnjiga;
+		--numberOfBorrowedBooks;
 	}
 
 	public int getBrojPosudjenihKnjiga() {
-		return brojPosudjenihKnjiga;
+		return numberOfBorrowedBooks;
 	}
 
 	public String toString() {
-		return "\n\n========= " + index + " ==========\n\n" + "\nIme: " + ime + "\nPrezime: " + prezime
-				+ "\nBroj posudjenih knjiga: " + brojPosudjenihKnjiga + "\n\n==================\n";
+		return "\n\n========= " + index + " ==========\n\n" + "\nFirst name: " + firstName + "\nLast name: " + lastName
+				+ "\nNumber of borrowed books: " + numberOfBorrowedBooks + "\n\n==================\n";
+	}
 }

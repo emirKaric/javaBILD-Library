@@ -1,11 +1,16 @@
-public class LIbrary {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
+public class Library {
 	
-		private ArrayList<Racun> korisnickiRacuni;
-		private ArrayList<Knjiga> knjigeUBiblioteci;
-		private ArrayList<PodignutaKnjiga> podignuteKnjige;
+		private ArrayList<Account> accounts;
+		private ArrayList<Book> books;
+		private ArrayList<BorrowedBook> borrowedBooks;
 		
 		/* Prepraviti dio koda implementirat bolji Algoritam za pretrazivanje */
-		private <E> Index vratiReferencu(ArrayList<Index> object, int left, int right, int index) {
+		
+		private Index getReference(ArrayList<? extends Index> object, int left, int right, int index) {
 
 	        if (right >= left) { 
 	            int middle = left + (right - left) / 2; 
@@ -18,10 +23,10 @@ public class LIbrary {
 	            // If element is smaller than mid, then 
 	            // it can only be present in left subarray 
 	            if (object.get(middle).getIndex() > index) 
-	                return vratiReferencu(object, left, middle - 1, index); 
+	                return getReference(object, left, middle - 1, index); 
 	            // Else the element can only be present 
 	            // in right subarray 
-	            return binarySearch(object, mid + 1, r, x); 
+	            return getReference(object, middle + 1, right, index); 
 	        } 
 	  
 	        // We reach here when element is not present 
@@ -29,15 +34,15 @@ public class LIbrary {
 			return null;
 		}
 		
-		public Biblioteka() {
-			korisnickiRacuni = new ArrayList<Racun>();
-			knjigeUBiblioteci = new ArrayList<Knjiga>();
-			podignuteKnjige = new ArrayList<PodignutaKnjiga>();
+		public Library() {
+			accounts = new ArrayList<Account>();
+			books = new ArrayList<Book>();
+			borrowedBooks = new ArrayList<BorrowedBook>();
 		}
-
-		public String posudiKnjigu(int indexKorisnika, int indexKnjige, Date datum) {
-			Racun korisnik = (Racun) vratiReferencu(indexKorisnika, korisnickiRacuni);
-			Knjiga knjiga = (Knjiga) vratiReferencu(indexKnjige, knjigeUBiblioteci);
+	
+		public String posudiKnjigu(int accountIndex, int bookIndex, Date date) {
+			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex );
+			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
 
 			if (provjeraKnjiga(knjiga)) {
 				return "Nije moguce dodati knjigu sa ovim indexom";

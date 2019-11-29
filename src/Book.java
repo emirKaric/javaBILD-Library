@@ -1,23 +1,21 @@
-public class Book {
+public class Book implements Index {
 	private static int _index; // Varijabla koja prati koliko ima knjiga
 	private final int index;
-	private String naziv;
-	private boolean statusKnjige; // Da li je podignuta ili ne
+	private String name;
+	private boolean bookStatus; // Da li je podignuta ili ne
 
 	static {
 		_index = 1;
 	}
 
-	Knjiga() {
+	Book(String name) {
 		index = _index++;
-		naziv = "Nepoznato";
-		statusKnjige = false;
+		this.name = name;
+		bookStatus = false;
 	}
 
-	Knjiga(String naziv) {
-		index = _index++;
-		this.naziv = naziv;
-		statusKnjige = false;
+	Book() {
+		this(null);
 	}
 
 	public static int getLength() {
@@ -29,20 +27,20 @@ public class Book {
 		return index;
 	}
 
-	public boolean getStatusKnjige() {
-		return statusKnjige;
+	public boolean getBookStatus() {
+		return bookStatus;
 	}
 
-	public void setStatusKnjige(boolean statusKnjige) {
-		this.statusKnjige = statusKnjige;
+	public void setBookStatus(boolean bookStatus) {
+		this.bookStatus = bookStatus;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
 	public String toString() {
-		return "\n\n========= " + index + " ==========\n\n" + "\nNaziv: " + naziv + "\nDa li je knjiga podignuta: "
-				+ statusKnjige + "\n\n==================\n";
+		return "\n\n========= " + index + " ==========\n\n" + "\nName: " + name + "\nIs book borrowed: "
+				+ bookStatus + "\n\n==================\n";
 	}
 }
