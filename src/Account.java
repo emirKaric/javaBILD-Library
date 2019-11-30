@@ -13,7 +13,7 @@ public class Account implements Index {
 	public Account(String firstName, String lastName) {
 		index = _index++;
 		this.firstName = firstName;
-		this.firstName = lastName;
+		this.lastName = lastName;
 		numberOfBorrowedBooks = 0;
 	}
 

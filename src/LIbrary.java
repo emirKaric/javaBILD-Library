@@ -9,7 +9,7 @@ public class Library {
 		/* Prepraviti dio koda implementirat bolji Algoritam za pretrazivanje */
 		
 		private Index getReference(ArrayList<? extends Index> object, int left, int right, int index) {
-
+			
 	        if (right >= left) { 
 	            int middle = left + (right - left) / 2; 
 	  
@@ -39,7 +39,7 @@ public class Library {
 			borrowedBooks = new ArrayList<BorrowedBook>();
 		}
 	
-		public void BorrowABook(int accountIndex, int bookIndex) {
+		public void borrowABook(int accountIndex, int bookIndex) {
 			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex);
 			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
 
@@ -55,11 +55,9 @@ public class Library {
 			account.increaseTheCounter();
 			
 			borrowedBooks.add(new BorrowedBook(accountIndex,bookIndex));
-			
-			return;
 		}
 
-		public void vratiKnjigu(int bookIndex) {
+		public void returnABook(int bookIndex) {
 			for (int i = 0; i < borrowedBooks.size(); i++) {
 					if (borrowedBooks.get(i).getBookIndex() == bookIndex) {
 						((Account) getReference(accounts, 0, accounts.size(), borrowedBooks.get(i).getAccountIndex())).decreaseTheCounter();
@@ -68,22 +66,61 @@ public class Library {
 						return;
 				}
 			}
-			return;
 		}
 
-		public void dodajKorisnika(String firstName, String lastName) {
+		public void addAccount(String firstName, String lastName) {
 			accounts.add(new Account(firstName, lastName));
 		}
+		
+		public void deleteAccount(int accountIndex) {
+			if(accounts.isEmpty())
+				return;
+			
+			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex);
+			
+			if(account == null) {
+				return;
+			}
+			if(account.getNumberOfBorrowedBooks() != 0) {
+				return;
+			}
+			
+			accounts.remove(account);
+		}
 
-		public void dodajKnjigu(String name) {
+		public void addBook(String name) {
 			books.add(new Book(name));
 		}
 		
-		public String toStringAll() {
+		public void deleteBook(int bookIndex) {
+			if(books.isEmpty())
+				return;
+			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
+			
+			if(book == null) {
+				return;
+			}
+			if(book.getBookStatus()) {
+				return;
+			}
+			
+			books.remove(book);
+		}
+		
+		public  String toStringAccounts () {
 			StringBuffer string = new StringBuffer();
 			string.append("");
 			for (int i = 0; i < accounts.size(); i++) {
 				string.append(accounts.get(i).toString());
+			}
+			return string.toString();
+		}
+		
+		public String toStringBooks() {
+			StringBuffer string = new StringBuffer();
+			string.append("");
+			for (int i = 0; i < books.size(); i++) {
+				string.append(books.get(i).toString());
 			}
 			return string.toString();
 		}
