@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
 
 	public static void printMeni() {
@@ -7,11 +9,12 @@ public class Main {
 		System.out.println("3. Add book");
 		System.out.println("4. Delete the book");
 		System.out.println("5. Borrow a book");
-		System.out.println("6. Print accounts");
-		System.out.println("7. Exit");
+		System.out.println("6. Return a book");
+		System.out.println("7. Print accounts");
+		System.out.println("8. Exit");
 	}
-	
-	public static void addAcount(Library library,java.util.Scanner input) {
+
+	public static void addAcount(Library library, java.util.Scanner input) {
 		String firstName, lastName;
 		System.out.println("Enter first name: ");
 		firstName = input.next().trim();
@@ -19,32 +22,40 @@ public class Main {
 		lastName = input.next().trim();
 		library.addAccount(firstName, lastName);
 	}
-	
+
 	public static void deleteAccount(Library library, java.util.Scanner input) {
 		int accountIndex;
 		System.out.println(library.toStringAccounts());
 		System.out.println("Enter account index: ");
 		accountIndex = input.nextInt();
 		input.nextLine();
-		library.deleteAccount(accountIndex);;
+		try {
+			library.deleteAccount(accountIndex);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
-	
+
 	public static void addBook(Library library, java.util.Scanner input) {
 		String name;
 		System.out.println("Enter name of the book: ");
 		name = input.nextLine().trim();
 		library.addBook(name);
 	}
-	
+
 	public static void deleteBook(Library library, java.util.Scanner input) {
 		int bookIndex;
 		System.out.println(library.toStringBooks());
 		System.out.println("Enter book index: ");
 		bookIndex = input.nextInt();
 		input.nextLine();
-		library.deleteBook(bookIndex);
+		try {
+			library.deleteBook(bookIndex);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
-	
+
 	public static void borrowBook(Library library, java.util.Scanner input) {
 		int bookIndex;
 		int accountIndex;
@@ -55,9 +66,27 @@ public class Main {
 		System.out.println("Enter your account index: ");
 		accountIndex = input.nextInt();
 		input.nextLine();
-		library.borrowABook(accountIndex, bookIndex);
+		try {
+			library.borrowABook(accountIndex, bookIndex);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
+
+	public static void returnBook(Library library, Scanner input) {
+		int bookIndex;
+		System.out.println(library.toStringBooks());
+		System.out.println("Enter book index: ");
+		bookIndex = input.nextInt();
+		input.nextLine();
+		try {
+			library.returnABook(bookIndex);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	public static void printAccounts(Library library) {
 		System.out.println(library.toStringAccounts());
 	}
@@ -67,7 +96,7 @@ public class Main {
 		Library library = new Library();
 		int meni;
 		java.util.Scanner input = new java.util.Scanner(System.in);
-	
+
 		do {
 			printMeni();
 			meni = input.nextInt();
@@ -88,12 +117,15 @@ public class Main {
 			case 5:
 				borrowBook(library, input);
 				break;
-			case 6:
+			case 6: 
+				returnBook(library, input);
+				break;
+			case 7:
 				printAccounts(library);
 				break;
 			}
-		} while (meni != 7);
-		
+		} while (meni != 8);
+
 		input.close();
 	}
 }

@@ -39,16 +39,16 @@ public class Library {
 			borrowedBooks = new ArrayList<BorrowedBook>();
 		}
 	
-		public void borrowABook(int accountIndex, int bookIndex) {
+		public void borrowABook(int accountIndex, int bookIndex) throws Exception{
 			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex);
 			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
 
 			if (book.getBookStatus()) {
-				return;
+				throw new Exception("The book is already borrowed!!");
 			}
 
 			if (account.getNumberOfBorrowedBooks() >= 3) {
-				return;
+				throw new Exception("The user has borrowed the maximum number of books!!");
 			}
 
 			book.setBookStatus(true);
@@ -72,17 +72,17 @@ public class Library {
 			accounts.add(new Account(firstName, lastName));
 		}
 		
-		public void deleteAccount(int accountIndex) {
+		public void deleteAccount(int accountIndex) throws Exception {
 			if(accounts.isEmpty())
-				return;
+				throw new Exception("Array is empty!!");
 			
 			Account account = (Account) getReference(accounts, 0, accounts.size(), accountIndex);
 			
 			if(account == null) {
-				return;
+				throw new Exception("The user with the given index does not exist");
 			}
 			if(account.getNumberOfBorrowedBooks() != 0) {
-				return;
+				throw new Exception("The user did not return all books, it is not possible to delete the account!");
 			}
 			
 			accounts.remove(account);
@@ -92,16 +92,16 @@ public class Library {
 			books.add(new Book(name));
 		}
 		
-		public void deleteBook(int bookIndex) {
+		public void deleteBook(int bookIndex) throws Exception {
 			if(books.isEmpty())
-				return;
+				throw new Exception("Array is empty!!");
 			Book book = (Book) getReference(books, 0, books.size(), bookIndex);
 			
 			if(book == null) {
-				return;
+				throw new Exception("The book with the given index does not exist");
 			}
 			if(book.getBookStatus()) {
-				return;
+				throw new Exception("The book has not been returned and cannot be deleted!!");
 			}
 			
 			books.remove(book);

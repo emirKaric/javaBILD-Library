@@ -50,7 +50,7 @@ public class Account implements Index {
 		++numberOfBorrowedBooks;
 	}
 
-	public void decreaseTheCounter() {
+	public void decreaseTheCounter(){
 		--numberOfBorrowedBooks;
 	}
 
