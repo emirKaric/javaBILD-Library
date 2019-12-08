@@ -1,30 +1,30 @@
-public class Book implements Index {
-	private static int _index; // Varijabla koja prati koliko ima knjiga
-	private final int index;
+public class Book implements ObjectId {
+	private static int numberOfObjects; // Varijabla koja prati koliko ima knjiga
+	private final int bookID;
 	private String name;
 	private boolean bookStatus; // Da li je podignuta ili ne
 
 	static {
-		_index = 1;
+		numberOfObjects = 1;
 	}
 
 	Book(String name) {
-		index = _index++;
+		this.bookID = numberOfObjects++;
 		this.name = name;
-		bookStatus = false;
+		this.bookStatus = false;
 	}
 
 	Book() {
 		this(null);
 	}
 
-	public static int getLength() {
-		return _index;
+	public static int getNumberOfObjects() {
+		return numberOfObjects;
 	}
 
 	@Override
-	public int getIndex() {
-		return index;
+	public int getID() {
+		return bookID;
 	}
 
 	public boolean getBookStatus() {
@@ -40,7 +40,7 @@ public class Book implements Index {
 	}
 
 	public String toString() {
-		return "\n\n========= " + index + " ==========\n\n" + "\nName: " + name + "\nIs book borrowed: "
+		return "\n\n========= " + bookID + " ==========\n\n" + "\nName: " + name + "\nIs book borrowed: "
 				+ bookStatus + "\n\n==================\n";
 	}
 }

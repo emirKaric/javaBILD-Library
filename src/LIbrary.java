@@ -8,19 +8,19 @@ public class Library {
 		
 		/* Prepraviti dio koda implementirat bolji Algoritam za pretrazivanje */
 		
-		private Index getReference(ArrayList<? extends Index> object, int left, int right, int index) {
+		private ObjectId getReference(ArrayList<? extends ObjectId> object, int left, int right, int index) {
 			
 	        if (right >= left) { 
 	            int middle = left + (right - left) / 2; 
 	  
 	            // If the element is present at the 
 	            // middle itself 
-	            if (object.get(middle).getIndex() == index) 
+	            if (object.get(middle).getID() == index) 
 	                return object.get(middle); 
 	  
 	            // If element is smaller than mid, then 
 	            // it can only be present in left subarray 
-	            if (object.get(middle).getIndex() > index) 
+	            if (object.get(middle).getID() > index) 
 	                return getReference(object, left, middle - 1, index); 
 	            // Else the element can only be present 
 	            // in right subarray 

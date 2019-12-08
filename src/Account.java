@@ -1,17 +1,17 @@
-public class Account implements Index {
-	private static int _index; // Varijabla koja prati koliko ima racuna
-	private final int index;
+public class Account implements ObjectId {
+	private static int numberOfObjects; // Varijabla koja prati koliko ima racuna
+	private final int accountID;
 	private String firstName;
 	private String lastName;
 	private int numberOfBorrowedBooks;
 
 	static {
-		_index = 1;
+		numberOfObjects = 1;
 	}
 
 
 	public Account(String firstName, String lastName) {
-		index = _index++;
+		accountID = numberOfObjects++;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		numberOfBorrowedBooks = 0;
@@ -21,13 +21,13 @@ public class Account implements Index {
 		this(null,null);
 	}
 
-	public static int getLength() {
-		return _index;
+	public static int getNumberOfObjects() {
+		return numberOfObjects;
 	}
 
 	@Override
-	public int getIndex() {
-		return index;
+	public int getID() {
+		return accountID;
 	}
 
 	public String getFirstName() {
@@ -59,7 +59,7 @@ public class Account implements Index {
 	}
 
 	public String toString() {
-		return "\n\n========= " + index + " ==========\n\n" + "\nFirst name: " + firstName + "\nLast name: " + lastName
+		return "\n\n========= " + accountID + " ==========\n\n" + "\nFirst name: " + firstName + "\nLast name: " + lastName
 				+ "\nNumber of borrowed books: " + numberOfBorrowedBooks + "\n\n==================\n";
 	}
 }
